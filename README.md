@@ -129,6 +129,30 @@ The testbench includes:
 
 ---
 
+## How to Run python script
+
+Custom help message:
+
+Switches:
+    --test: Test name (default: sanity_test)
+    --run: Run type (choices: cmp, elb, sim, debug, wave; default: sim)
+    --tool: Tool name (choices: vivado, xlim; default: vivado)
+    --seed: Seed value for the simulation, default value ==0
+    --coverage: The uvc has coverage or no, default value ==no
+    --verbosity: UVM verbosity for the simulation, default value ==UVM_NONE
+    --regr: Run regression test
+    --remove: Remove all directories existing in the current directory
+    --help: Show this custom help message
+
+sample command for Elaboration:
+ 	 ./run_script.py --run elb --tool xlim
+
+sample command for single test:
+ 	 ./run_script.py --test sanity_test --run sim --tool xlim --seed 12345 --coverage yes/no
+
+command for regression:
+ 	 ./run_script.py --regr --seed 125/random --coverage yes/no
+
 ## 📫 Contact
 
 Md. Imran Khan  
