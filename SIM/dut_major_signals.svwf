@@ -1,0 +1,285 @@
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+array unset createdGroup
+array set createdGroup {}
+#
+# Groups
+#
+if {[catch {group get -using [list {dut_all_signals}]}]} {
+set createdGroup([list {dut_all_signals}]) 1
+catch {group new -name dut_all_signals -overlay 0}
+}
+if {[catch {group get -using [list {DUT_MAJOR_SIGNALS}]}]} {
+set createdGroup([list {DUT_MAJOR_SIGNALS}]) 1
+catch {group new -name DUT_MAJOR_SIGNALS -overlay 0}
+}
+if {[info exists createdGroup([list {dut_all_signals}])]} {
+group using dut_all_signals
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.clk_intf.CLK_1}]} ] \
+    [subst  {[format {tb_top.clk_intf.CLK_2}]} ] \
+    [subst  {[format {tb_top.clk_intf.RESET_1}]} ] \
+    [subst  {[format {tb_top.clk_intf.RESET_2}]} ] \
+    [subst  {[format {tb_top.clk_intf.clk}]} ] \
+    [subst  {[format {tb_top.clk_intf.rst_n}]} ] \
+    [subst  {[format {tb_top.dut.clk}]} ] \
+    [subst  {[format {tb_top.dut.dma_done_o}]} ] \
+    [subst  {[format {tb_top.dut.dma_error_o}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_aruser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_buser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_miso}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_mosi}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_ruser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_miso}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_mosi}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.rst}]} ]
+}
+
+if {[info exists createdGroup([list {DUT_MAJOR_SIGNALS}])]} {
+group using DUT_MAJOR_SIGNALS
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.clk}]} ] \
+    [subst  {[format {tb_top.dut.rst}]} ] \
+    [subst  {[format {tb_top.dut.dma_done_o}]} ] \
+    [subst  {[format {tb_top.dut.dma_error_o}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rresp[1:0]}]} ] \
+    [subst  {[format {tb_top.clk_intf.CLK_1}]} ] \
+    [subst  {[format {tb_top.clk_intf.rst_n}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rresp[1:0]}]} ]
+}
+
+
+set groupId0 [waveform add -groups DUT_MAJOR_SIGNALS]
+set gpGlist0 [waveform hierarchy contents $groupId0]
+set gpID0 [lindex $gpGlist0 0]
+foreach {name attrs} [subst  {
+    {[format {tb_top.dut.clk}]} {}
+    {[format {tb_top.dut.rst}]} {}
+    {[format {tb_top.dut.dma_done_o}]} {-bgcolor #000000}
+    {[format {tb_top.dut.dma_error_o}]} {}
+    {[format {tb_top.dut.dma_m_awready}]} {-namecolor #00ffff}
+    {[format {tb_top.dut.dma_m_awvalid}]} {-namecolor #00ffff}
+    {[format {tb_top.dut.dma_m_awaddr[31:0]}]} {-namecolor #00ffff}
+    {[format {tb_top.dut.dma_m_awburst[1:0]}]} {-namecolor #00ffff}
+    {[format {tb_top.dut.dma_m_awlen[7:0]}]} {-namecolor #00ffff}
+    {[format {tb_top.dut.dma_m_awsize[2:0]}]} {-namecolor #00ffff}
+    {[format {tb_top.dut.dma_m_wready}]} {-namecolor #00ff00}
+    {[format {tb_top.dut.dma_m_wvalid}]} {-namecolor #00ff00}
+    {[format {tb_top.dut.dma_m_wdata[31:0]}]} {-namecolor #00ff00}
+    {[format {tb_top.dut.dma_m_wstrb[3:0]}]} {-namecolor #00ff00}
+    {[format {tb_top.dut.dma_m_wlast}]} {-color #00ff00 -namecolor #00ff00}
+    {[format {tb_top.dut.dma_m_bready}]} {-namecolor #ff00ff}
+    {[format {tb_top.dut.dma_m_bvalid}]} {-namecolor #ff00ff}
+    {[format {tb_top.dut.dma_m_bresp[1:0]}]} {-namecolor #ff00ff}
+    {[format {tb_top.dut.dma_m_arready}]} {-namecolor #00ff99}
+    {[format {tb_top.dut.dma_m_arvalid}]} {-namecolor #00ff99}
+    {[format {tb_top.dut.dma_m_araddr[31:0]}]} {-namecolor #00ff99}
+    {[format {tb_top.dut.dma_m_arburst[1:0]}]} {-namecolor #00ff99}
+    {[format {tb_top.dut.dma_m_arlen[7:0]}]} {-namecolor #00ff99}
+    {[format {tb_top.dut.dma_m_arsize[2:0]}]} {-namecolor #00ff99}
+    {[format {tb_top.dut.dma_m_rready}]} {-namecolor #9900ff}
+    {[format {tb_top.dut.dma_m_rvalid}]} {-namecolor #9900ff}
+    {[format {tb_top.dut.dma_m_rdata[31:0]}]} {-namecolor #9900ff}
+    {[format {tb_top.dut.dma_m_rlast}]} {-namecolor #9900ff}
+    {[format {tb_top.dut.dma_m_rresp[1:0]}]} {-namecolor #9900ff}
+    {[format {tb_top.clk_intf.CLK_1}]} {}
+    {[format {tb_top.clk_intf.rst_n}]} {}
+    {[format {tb_top.dut.dma_s_awaddr[31:0]}]} {-namecolor #ff0000}
+    {[format {tb_top.dut.dma_s_awready}]} {-namecolor #ff0000}
+    {[format {tb_top.dut.dma_s_awvalid}]} {-namecolor #ff0000}
+    {[format {tb_top.dut.dma_s_wstrb[3:0]}]} {-namecolor #ff9900}
+    {[format {tb_top.dut.dma_s_wdata[31:0]}]} {-namecolor #ff9900}
+    {[format {tb_top.dut.dma_s_wready}]} {-namecolor #ff9900}
+    {[format {tb_top.dut.dma_s_wvalid}]} {-namecolor #ff9900}
+    {[format {tb_top.dut.dma_s_bresp[1:0]}]} {-namecolor #ffff00}
+    {[format {tb_top.dut.dma_s_bready}]} {-namecolor #ffff00}
+    {[format {tb_top.dut.dma_s_bvalid}]} {-namecolor #ffff00}
+    {[format {tb_top.dut.dma_s_araddr[31:0]}]} {-namecolor #99ff00}
+    {[format {tb_top.dut.dma_s_arready}]} {-namecolor #99ff00}
+    {[format {tb_top.dut.dma_s_arvalid}]} {-namecolor #99ff00}
+    {[format {tb_top.dut.dma_s_rdata[31:0]}]} {-namecolor #0099ff}
+    {[format {tb_top.dut.dma_s_rready}]} {-namecolor #0099ff}
+    {[format {tb_top.dut.dma_s_rvalid}]} {-namecolor #0099ff}
+    {[format {tb_top.dut.dma_s_rresp[1:0]}]} {-namecolor #0099ff}
+}] childcmds {
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+    {}
+} {
+    set expected [ join [waveform signals -format path $gpID0] ]
+    if {[string equal $name $expected] || $name == "cdivider"} {
+        if {$attrs != ""} {
+            eval waveform format $gpID0 $attrs
+        }
+        if { $childcmds != ""} {
+            eval $childcmds
+        }
+    }
+    set gpGlist0 [lrange $gpGlist0 1 end]
+    set gpID0 [lindex $gpGlist0 0]
+}
+
+
+waveform xview limits 0 560ns

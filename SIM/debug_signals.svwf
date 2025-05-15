@@ -1,0 +1,456 @@
+
+#
+# Mnemonic Maps
+#
+mmap new  -reuse -name {Boolean as Logic} -radix %b -contents {{%c=FALSE -edgepriority 1 -shape low}
+{%c=TRUE -edgepriority 1 -shape high}}
+mmap new  -reuse -name {Example Map} -radix %x -contents {{%b=11???? -bgcolor orange -label REG:%x -linecolor yellow -shape bus}
+{%x=1F -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=2C -bgcolor red -label ERROR -linecolor white -shape EVENT}
+{%x=* -label %x -linecolor gray -shape bus}}
+
+array unset createdGroup
+array set createdGroup {}
+#
+# Groups
+#
+if {[catch {group get -using [list {debug_read}]}]} {
+set createdGroup([list {debug_read}]) 1
+catch {group new -name debug_read -overlay 0}
+}
+if {[catch {group get -using [list {AREAD}]}]} {
+set createdGroup([list {AREAD}]) 1
+catch {group new -name AREAD -overlay 0}
+}
+if {[catch {group get -using [list {AWRITE}]}]} {
+set createdGroup([list {AWRITE}]) 1
+catch {group new -name AWRITE -overlay 0}
+}
+if {[catch {group get -using [list {BRESP}]}]} {
+set createdGroup([list {BRESP}]) 1
+catch {group new -name BRESP -overlay 0}
+}
+if {[catch {group get -using [list {RDATA}]}]} {
+set createdGroup([list {RDATA}]) 1
+catch {group new -name RDATA -overlay 0}
+}
+if {[catch {group get -using [list {WDATA}]}]} {
+set createdGroup([list {WDATA}]) 1
+catch {group new -name WDATA -overlay 0}
+}
+if {[catch {group get -using [list {AXI4_AR}]}]} {
+set createdGroup([list {AXI4_AR}]) 1
+catch {group new -name AXI4_AR -overlay 0}
+}
+if {[catch {group get -using [list {AXI4_AW}]}]} {
+set createdGroup([list {AXI4_AW}]) 1
+catch {group new -name AXI4_AW -overlay 0}
+}
+if {[catch {group get -using [list {AXI4_BRESP}]}]} {
+set createdGroup([list {AXI4_BRESP}]) 1
+catch {group new -name AXI4_BRESP -overlay 0}
+}
+if {[catch {group get -using [list {AXI4_RDATA}]}]} {
+set createdGroup([list {AXI4_RDATA}]) 1
+catch {group new -name AXI4_RDATA -overlay 0}
+}
+if {[catch {group get -using [list {AXI4_WDATA}]}]} {
+set createdGroup([list {AXI4_WDATA}]) 1
+catch {group new -name AXI4_WDATA -overlay 0}
+}
+if {[catch {group get -using [list {AXI4L_AR}]}]} {
+set createdGroup([list {AXI4L_AR}]) 1
+catch {group new -name AXI4L_AR -overlay 0}
+}
+if {[catch {group get -using [list {AXI4L_AW}]}]} {
+set createdGroup([list {AXI4L_AW}]) 1
+catch {group new -name AXI4L_AW -overlay 0}
+}
+if {[catch {group get -using [list {AXI4L_BRESP}]}]} {
+set createdGroup([list {AXI4L_BRESP}]) 1
+catch {group new -name AXI4L_BRESP -overlay 0}
+}
+if {[catch {group get -using [list {AXI4L_RDATA}]}]} {
+set createdGroup([list {AXI4L_RDATA}]) 1
+catch {group new -name AXI4L_RDATA -overlay 0}
+}
+if {[catch {group get -using [list {AXI4L_WDATA}]}]} {
+set createdGroup([list {AXI4L_WDATA}]) 1
+catch {group new -name AXI4L_WDATA -overlay 0}
+}
+if {[info exists createdGroup([list {debug_read}])]} {
+group using debug_read
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.clk}]} ] \
+    [subst  {[format {tb_top.dut.dma_done_o}]} ] \
+    [subst  {[format {tb_top.dut.dma_error_o}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_aruser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_buser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_miso[59:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_mosi[182:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_ruser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_miso[56:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_mosi[126:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wvalid}]} ] \
+    [subst  {[format {tb_top.dut.rst}]} ]
+}
+
+if {[info exists createdGroup([list {AREAD}])]} {
+group using AREAD
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_arid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_aruser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arready}]} ]
+}
+
+if {[info exists createdGroup([list {AWRITE}])]} {
+group using AWRITE
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_awid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awvalid}]} ]
+}
+
+if {[info exists createdGroup([list {BRESP}])]} {
+group using BRESP
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_buser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bid[7:0]}]} ]
+}
+
+if {[info exists createdGroup([list {RDATA}])]} {
+group using RDATA
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_rid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_ruser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rresp[1:0]}]} ]
+}
+
+if {[info exists createdGroup([list {WDATA}])]} {
+group using WDATA
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_wuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wvalid}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4_AR}])]} {
+group using AXI4_AR
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_arvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_arid[7:0]}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4_AW}])]} {
+group using AXI4_AW
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awqos[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awregion[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awsize[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlock}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awlen[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awcache[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_awburst[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_aruser[0:0]}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4_BRESP}])]} {
+group using AXI4_BRESP
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_bid[7:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_buser[0:0]}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4_RDATA}])]} {
+group using AXI4_RDATA
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_rresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_ruser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_rid[7:0]}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4_WDATA}])]} {
+group using AXI4_WDATA
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_m_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wuser[0:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_m_wlast}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4L_AR}])]} {
+group using AXI4L_AR
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_s_arprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_araddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_arvalid}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4L_AW}])]} {
+group using AXI4L_AW
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_s_awprot[2:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awaddr[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_awvalid}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4L_BRESP}])]} {
+group using AXI4L_BRESP
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_s_bvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_bresp[1:0]}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4L_RDATA}])]} {
+group using AXI4L_RDATA
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_s_rresp[1:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rvalid}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_rlast}]} ]
+}
+
+if {[info exists createdGroup([list {AXI4L_WDATA}])]} {
+group using AXI4L_WDATA
+group set -overlay 0
+group set -comment {}
+group clear 0 end
+group insert \
+    [subst  {[format {tb_top.dut.dma_s_wstrb[3:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wlast}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wdata[31:0]}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wready}]} ] \
+    [subst  {[format {tb_top.dut.dma_s_wvalid}]} ]
+}
+
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.clk}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.rst}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.dma_done_o}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.dma_error_o}]}
+	} ]]
+
+set groupId0 [waveform add -groups AXI4_AW]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4_WDATA]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4_BRESP]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4_AR]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4_RDATA]
+waveform hierarchy collapse $groupId0
+
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.dma_m_miso[59:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.dma_m_mosi[182:0]}]}
+	} ]]
+
+set groupId0 [waveform add -groups AXI4L_AR]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4L_AW]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4L_BRESP]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4L_RDATA]
+waveform hierarchy collapse $groupId0
+
+
+set groupId0 [waveform add -groups AXI4L_WDATA]
+waveform hierarchy collapse $groupId0
+
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.dma_s_miso[56:0]}]}
+	} ]]
+set id [waveform add -signals [subst  {
+	{[format {tb_top.dut.dma_s_mosi[126:0]}]}
+	} ]]
+
+waveform xview limits 0 114000ps

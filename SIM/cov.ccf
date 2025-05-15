@@ -1,0 +1,34 @@
+#Enable functional coverage (PSL/SVA and SV covergroups)
+ 
+select_functional
+ 
+# Specific options for finer granularity in coverage scoring
+set_implicit_block_scoring -off
+set_explicit_block_scoring -off
+set_code_fine_grained_merging
+set_toggle_scoring -sv_mda 16 -regeot
+set_toggle_portsonly
+##or
+##set_toggle_noports
+ 
+ 
+## set_toggle_excludefile
+# set_toggle_excludefile [-nolog] [-bitexclude] <path>/<file>/<exclusion_file.txt>
+# set_toggle_smart_refinement
+set_parameterized_module_coverage
+set_libcell_scoring -enable_vy    
+set_covergroup -per_instance_default_one
+#set_covergroup -bin_merge
+set_expr_scoring -max_expr_terms 16
+set_expr_coverable_operators -bitwise -relational -reduction -logical_not
+set_expr_coverable_statements -all
+set_branch_scoring
+set_subprogram_scoring -used
+set_refinement_resilience
+ 
+ 
+#  Optimization switches
+set_optimize -vlog_prune_on
+set_optimize -top_expr_non_scorable
+set_optimize -prune_covergroup
+
